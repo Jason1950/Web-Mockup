@@ -1,0 +1,16 @@
+
+
+{
+  "port": 8000,
+  "files": ["./*.{html,htm,css,js}"],
+  "server": { "baseDir": "./" },
+  "//startPath": "/001/RoomChair.html" ,
+  "//startPath": "/002/Personclick.html" ,
+  "//startPath": "/003/CubeVedio.html" ,
+  "startPath": "/index.html" ,
+  
+  "ui": {
+    "port": 8001
+  }
+}
+

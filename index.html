@@ -1,142 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>three.js webgl - FBX loader</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-	<body>
-		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - FBXLoader<br />
-			Character and animation from <a href="https://www.mixamo.com/" target="_blank" rel="noopener">Mixamo</a>
-		</div>
+    <!-- jQuery lib -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-		<script type="module">
+    <!-- icon link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- Step1 css -->
+    <link rel="stylesheet" href="./step1.css">
 
-			import * as THREE from '../build/three.module.js';
+    <!-- Step2 css -->
+    <link rel="stylesheet" href="./step2.css">
 
-			import Stats from './jsm/libs/stats.module.js';
+    <style>
+        .main3{
+			margin:0%;
+            position: absolute; 
+            top: 0; left: 0;
+            background: rgb(226, 240, 99);
+            /* background-color: #53565a; */
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            /* display: block; */
+            color: #080808;;
+            justify-content: center;
+            display: flex;
+		}
+        #main3-canvas{
+            /* position: absolute; */
+            /* top: 15%; */
+            /* z-index: 14; */
+        }
+        #main3-title{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1%;
+            font-size: 25px;
+            font-weight: 700;
+            z-index: 15;
+            position: absolute;
+            
+        }
+        #main3-btn1-return{
+            /* z-index: -1; */
+            font-size:20px;
+            font-Weight: 700;
+            position: absolute;
+            z-index: 1;
+            top: 90%;
+            left: 10%;
+        }
 
-			import { OrbitControls } from './jsm/controls/OrbitControls.js';
-			import { FBXLoader } from './jsm/loaders/FBXLoader.js';
 
-			let camera, scene, renderer, stats;
 
-			const clock = new THREE.Clock();
+    </style>
+    <script type="text/javascript" src="shake.js"></script>
+</head>
+<body>
 
-			let mixer;
+    <!-- 第一區塊 -->
+    <div class="main1">
+        <div id="main1-tilte"> 故 宮 D e m o </div>
+        <span class="loader"><span class="loader-inner"></span></span>
+        <div class="loader-text">L o a d i n g . . .</div>
+    </div>
 
-			init();
-			animate();
+    <!-- 第二區塊 -->
+    <div class="main2">
+        <div id="main2-tilte"> 故 宮 D e m o </div>
+        <div id="main2-text1"> Step.1 T Pose and take a picture ! </div>
+        <div id="main2-text2"> Step.2 Wait for minute ! </div>
+        <img id="main2-img1" src="./Tpose.jpg"  alt="tpose">
+        <img id="main2-img2" src="./modelGeneration.jpg"  alt="tpose">
+        <button id="main2-btn1" onclick="main2ButtnClick()"><i class="fa fa-camera"> 開始擷取T-Pose</i></button>
+    </div>
 
-			function init() {
+    <!-- 第三區塊 -->
+    <div class="main3">
+        <div id="main3-block">
+            <div id="main3-title">Shake it ! ! <img src="./pics/shake-removebg.png" width="20%"></i> </div>
+            <canvas id="main3-canvas" style="width:50%"></canvas>
+            <!-- <div id="main3-return">return</div> -->
+            <button id="main3-btn1-return" onclick="main2ButtnClick()"><i class="fa fa-telegram"> Return</i></button>
+        </div>
+        
+    </div>
 
-				const container = document.createElement( 'div' );
-				document.body.appendChild( container );
+</body>
+<script src="webglJS.js" type="module" ></script>
+<script>
+    function main2ButtnClick (){
+        $('.main2').delay(300).fadeOut(400)
+        $('.main1').delay(300).fadeIn(400)
 
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.set( 100, 200, 300 );
+        $('.main1').delay(3000).fadeOut(400)
+        $('.main3').delay(3000).fadeIn(400)
+    }
 
-				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 0xa0a0a0 );
-				scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );
+    // **********************
+    //        n o w
+    // **********************
+    $(".main3").hide();
+    $(".main2").hide();
+    $('.main1').delay(3000).fadeOut(400)
+    $('.main2').delay(3000).fadeIn(400)
 
-				const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444 );
-				hemiLight.position.set( 0, 200, 0 );
-				scene.add( hemiLight );
 
-				const dirLight = new THREE.DirectionalLight( 0xffffff );
-				dirLight.position.set( 0, 200, 100 );
-				dirLight.castShadow = true;
-				dirLight.shadow.camera.top = 180;
-				dirLight.shadow.camera.bottom = - 100;
-				dirLight.shadow.camera.left = - 120;
-				dirLight.shadow.camera.right = 120;
-				scene.add( dirLight );
+    // **********************
+    //     last function 
+    // **********************
+    
+    // setTimeout(()=>{
+    //     var myCSS = document.getElementsByClassName("main1")[0];
+    //     console.log(myCSS);
+    //     myCSS.style.display="none"; // 不显示，隐藏
 
-				// scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
-
-				// ground
-				const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
-				mesh.rotation.x = - Math.PI / 2;
-				mesh.receiveShadow = true;
-				scene.add( mesh );
-
-				const grid = new THREE.GridHelper( 2000, 20, 0x000000, 0x000000 );
-				grid.material.opacity = 0.2;
-				grid.material.transparent = true;
-				scene.add( grid );
-
-				// model
-				const loader = new FBXLoader();
-				loader.load( './man_Angry.fbx', function ( object ) {
-
-					mixer = new THREE.AnimationMixer( object );
-
-					const action = mixer.clipAction( object.animations[ 0 ] );
-					action.play();
-
-					object.traverse( function ( child ) {
-
-						if ( child.isMesh ) {
-
-							child.castShadow = true;
-							child.receiveShadow = true;
-
-						}
-
-					} );
-
-					scene.add( object );
-
-				} );
-
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.shadowMap.enabled = true;
-				container.appendChild( renderer.domElement );
-
-				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.target.set( 0, 100, 0 );
-				controls.update();
-
-				window.addEventListener( 'resize', onWindowResize );
-
-				// stats
-				stats = new Stats();
-				container.appendChild( stats.dom );
-
-			}
-
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-			}
-
-			//
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-
-				const delta = clock.getDelta();
-
-				if ( mixer ) mixer.update( delta );
-
-				renderer.render( scene, camera );
-
-				stats.update();
-
-			}
-
-		</script>
-
-	</body>
+    //     var myCSS = document.getElementsByClassName("main2")[0];
+    //     console.log(myCSS);
+    //     myCSS.style.display="block"; // 不显示，隐藏
+    // }, 3000 )
+    
+</script>
+<!-- <script type="text/javascript">
+    window.onload = function() {
+    
+        //create a new instance of shake.js.
+        var myShakeEvent = new Shake({
+            threshold: 15
+        });
+    
+        // start listening to device motion
+        myShakeEvent.start();
+    
+        // register a shake event
+        window.addEventListener('shake', shakeEventDidOccur, false);
+    
+        //shake event callback
+        function shakeEventDidOccur () {
+    
+            //put your own code here etc.
+            alert('Shake!');
+        }
+    };
+    </script> -->
 </html>
