@@ -1,4 +1,34 @@
+.fade4{
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 16;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
+#fade4-title{
+    color: #fff;
+    font-size: 35px;
+}
+
+#fade4-block{
+    width: 12%;
+    background: #52a9ff;
+    border-radius: 100%;
+    padding: 17px;
+}
+
+#fade4-shake{
+    width: 100%;
+    animation: Jun_ring 2s infinite ease;
+    /* animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; */
+}
 
 @keyframes Jun_ring {
     0% {

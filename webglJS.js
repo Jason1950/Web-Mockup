@@ -56,7 +56,7 @@
     // } );
 
     window.onload = function() {
-    
+        
         //create a new instance of shake.js.
         var myShakeEvent = new Shake({
             threshold: 15
@@ -67,18 +67,13 @@
     
         // register a shake event
         window.addEventListener('shake', shakeEventDidOccur, false);
-    
+
         //shake event callback
         function shakeEventDidOccur () {
-            // playOnClick();
             //put your own code here etc.
             // alert('Shake!');
-            // JanimationPlay();
             const fSpeed = 0.25, tSpeed = 0.25;
-            // mixer.stopAllAction();
-            // let randInt = Math.floor(Math.random() * animationArray.length);
             action = mixer.clipAction( animationArray[0] );
-            // action.reset();
             action.setLoop(THREE.LoopOnce);
             action.reset();
             action.play();
@@ -95,15 +90,6 @@
     animate();
 
     function init() {
-
-        // const container = document.createElement( 'div' );
-        // // container.className='tclose'
-        // container.setAttribute("id", "hk1");
-        // document.body.appendChild( container );
-        // const main2Canvas = document.querySelector("#hk1 canvas");
-        // console.log(main2Canvas);
-        // var canvas = document.querySelector("#canvas");
-        // container.width = 300;
 
         camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
         camera.position.set( 10, 200, 350 );
@@ -147,7 +133,6 @@
   
             // const action = mixer.clipAction( animationArray[0] );
             // action.play();
-            
             object.traverse( function ( child ) {
 
                 if ( child.isMesh ) {
@@ -155,53 +140,35 @@
                     child.castShadow = true;
                     child.receiveShadow = true;
                     child.material = man_mtl;
-
                 }
-
             } );
             object.name = "man";
             scene.add( object );
-
         } );
        
 
         
-
         canvas = document.getElementById("main3-canvas");
-        // canvas.width = '50%';
-        // canvas.z-index = '50%';
         console.log(canvas);
+        // ---------------- 綁定 canvas 為 自己指定的element !! --------------- //
         renderer = new THREE.WebGLRenderer({ canvas: canvas,antialias: true });
-        
-        // renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( window.innerWidth*resizePara, window.innerHeight*resizePara );
         renderer.shadowMap.enabled = true;
-        // container.appendChild( renderer.domElement );
 
         const controls = new OrbitControls( camera, renderer.domElement );
         controls.maxPolarAngle = Math.PI / 2 - 0.11;
         controls.minPolarAngle = Math.PI / 3 - 0.15;
         controls.maxAzimuthAngle = Math.PI *1/4 ;   //from 120 ~ -180 degree 
         controls.minAzimuthAngle = -Math.PI *2/3 ;
-        // controls.enableDamping = true;
         controls.enableZoom = false;
-        // controls.minDistance = 8;
-        // controls.maxDistance = 17;
-        // controls.enablePan = false;
         controls.dampingFactor = 0.1;
         // controls.autoRotate = false; // Toggle this if you'd like the chair to automatically rotate
         // controls.autoRotateSpeed = 0.2; // 30
 
         controls.target.set( 0, 100, 0 );
         controls.update();
-
         window.addEventListener( 'resize', onWindowResize );
-
-        // stats
-        // stats = new Stats();
-        // container.appendChild( stats.dom );
-
     }
 
     function onWindowResize() {
