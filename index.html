@@ -18,12 +18,15 @@
     <!-- Step2 css -->
     <link rel="stylesheet" href="./step2.css">
 
+    <!-- Step3 css -->
+    <link rel="stylesheet" href="./step3.css">
+
     <style>
         .main3{
 			margin:0%;
             position: absolute; 
             top: 0; left: 0;
-            background: rgb(226, 240, 99);
+            background: #383838;
             /* background-color: #53565a; */
             width: 100%;
             height: 100%;
@@ -42,23 +45,33 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 1%;
-            font-size: 25px;
-            font-weight: 700;
+            margin-top: 10%;
+            font-size: 12px;
+            font-weight: 500;
             z-index: 15;
             position: absolute;
-            
+            width: 100%;
         }
         #main3-btn1-return{
             /* z-index: -1; */
-            font-size:20px;
-            font-Weight: 700;
+            font-size:10px;
+            font-Weight: 500;
             position: absolute;
             z-index: 1;
-            top: 90%;
+            top: 85%;
             left: 10%;
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+            border: none;
+            color: #fff;
+            background: #f44336;
         }
-
+        #main3-fade-shake{
+            animation: Jun_ring 2s infinite ease;
+            /* animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; */
+        }
+       
 
 
     </style>
@@ -68,28 +81,58 @@
 
     <!-- 第一區塊 -->
     <div class="main1">
-        <div id="main1-tilte"> 故 宮 D e m o </div>
+        <div id="main1-tilte"> 故宮Demo </div>
         <span class="loader"><span class="loader-inner"></span></span>
         <div class="loader-text">L o a d i n g . . .</div>
     </div>
 
     <!-- 第二區塊 -->
     <div class="main2">
-        <div id="main2-tilte"> 故 宮 D e m o </div>
+        <div id="main2-tilte">故宮Demo</div>
         <div id="main2-text1"> Step.1 T Pose and take a picture ! </div>
         <div id="main2-text2"> Step.2 Wait for minute ! </div>
         <img id="main2-img1" src="./Tpose.jpg"  alt="tpose">
         <img id="main2-img2" src="./modelGeneration.jpg"  alt="tpose">
-        <button id="main2-btn1" onclick="main2ButtnClick()"><i class="fa fa-camera"> 開始擷取T-Pose</i></button>
+        <button id="main2-btn1" onclick="main2ButtnClick()"><i class="fa fa-camera"></i> 開始擷取T-Pose</button>
     </div>
 
     <!-- 第三區塊 -->
+    <div id="main3-fade" style="
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 16;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    "> 
+
+    <h1 style="
+    color: #fff;
+    font-size: 35px;
+    ">SHAKE IT ! !</h1>
+    <div style="
+    width: 12%;
+    background: #52a9ff;
+    border-radius: 100%;
+    padding: 17px;
+    ">
+    <img id="main3-fade-shake" src="https://cdn-icons-png.flaticon.com/512/1527/1527496.png" style="
+        /* color: #fff; */
+        width: 100%;
+    ">
+    </div>
+    </div>
     <div class="main3">
         <div id="main3-block">
-            <div id="main3-title">Shake it ! ! <img src="./pics/shake-removebg.png" width="20%"></i> </div>
+            <div id="main3-title">Please shake your phone to animate the avatar </div>
             <canvas id="main3-canvas" style="width:50%"></canvas>
             <!-- <div id="main3-return">return</div> -->
-            <button id="main3-btn1-return" onclick="main2ButtnClick()"><i class="fa fa-telegram"> Return</i></button>
+            <button id="main3-btn1-return" onclick="main2ButtnClick()"><i class="fa fa-upload" style="font-size: 22px;"></i> Upload</button>
         </div>
         
     </div>
@@ -103,15 +146,18 @@
 
         $('.main1').delay(3000).fadeOut(400)
         $('.main3').delay(3000).fadeIn(400)
+        $('#main3-fade').delay(3000).fadeIn(400)
+        $('#main3-fade').delay(4500).fadeOut(400)
     }
 
     // **********************
     //        n o w
     // **********************
-    $(".main3").hide();
-    $(".main2").hide();
-    $('.main1').delay(3000).fadeOut(400)
-    $('.main2').delay(3000).fadeIn(400)
+    $("#main3-fade").hide();
+    // $(".main3").hide();
+    // $(".main2").hide();
+    // $('.main1').delay(3000).fadeOut(400)
+    // $('.main2').delay(3000).fadeIn(400)
 
 
     // **********************
