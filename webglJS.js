@@ -79,7 +79,7 @@
         
         //create a new instance of shake.js.
         var myShakeEvent = new Shake({
-            threshold: 15
+            threshold: 14
         });
     
         // start listening to device motion
