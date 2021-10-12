@@ -41,20 +41,26 @@
     <!-- 第二區塊 -->
     <div class="main2">
         <div id="main2-tilte">故宮Demo</div>
-        <div id="main2-text1"> Step.1 T Pose and take a picture ! </div>
-        <div id="main2-text2"> Step.2 Wait for minute ! </div>
-        <img id="main2-img1" src="./pics/Tpose.jpg"  alt="tpose">
-        <img id="main2-img2" src="./pics/modelGeneration.jpg"  alt="tpose">
-        <button id="main2-btn1" onclick="main2ButtnClick()"><i class="fa fa-camera"></i> 開始擷取T-Pose</button>
+        <div id="main2-text1"> Step.1 蒐集場域素材 ! </div>
+        <div id="main2-text2"> Step.2 彩繪數位分身衣服特徵 ! </div>
+        <div id="main2-text3"> Step.3 上傳至場域作品內 ! </div>
+        <!-- <img id="main2-img1" src="./pics/make-removebg.png"  alt="tpose"> -->
+        <img id="main2-img2" src="./pics/model.jpg"  alt="tpose">
+        <button id="main2-btn1" onclick="main2ButtnClick()"><img src="./pics/make-removebg2.png" id="main2-btn-img"></i> 　開始製作數位分身</button>
     </div>
+    <!-- i class="fa fa-camera"></i -->
+    
 
     <!-- 第三區塊 -->
     <div class="main3">
         <div id="main3-block">
             <div id="main3-title">Please shake your phone to animate the avatar </div>
-            <canvas id="main3-canvas" style="width:50%"></canvas>
+            <canvas id="main3-canvas" style="width:50%" ></canvas>
             <!-- <div id="main3-return">return</div> -->
             <button id="main3-btn1-return" onclick="main3ButtnClick()"><i class="fa fa-upload" style="font-size: 22px;"></i> Upload</button>
+            <button id="main3-btn1-search" onclick="main3ButtnClick()"><i class="fa fa-search-plus" style="font-size: 22px;"></i> Collect</button>
+            <button id="main3-btn1-pain" onclick="main3ButtnClick()"><i class="fa fa-paint-brush" style="font-size: 22px;"></i> custom</br>made</button>
+            
             <!-- <button id="main3-btn1-return" onclick="main3ButtnClick()"><i class="fa fa-upload" style="font-size: 22px;"></i> Upload</button> -->
         </div>    
     </div>
@@ -90,6 +96,17 @@
 <script>
     let stateMain3 = false;
 
+    let ws = new WebSocket("wss://itri-router-sstc.ngrok.io");
+    ws.onopen = () => {
+        console.log("open connection");
+    };
+    ws.onclose = () => {
+        console.log("close connection");
+    };
+    // ws.onmessage = (event) => {
+    //     if(event.data=='action') flyState = true;
+    // };
+
     function main2ButtnClick (){
         ios13granted();
         $('.main2').delay(300).fadeOut(400);
@@ -98,9 +115,12 @@
         $('.main1').delay(4500).fadeOut(400);
         $('.main3').delay(4500).fadeIn(400);
         $('.fade4').delay(4500).fadeIn(400);
-        $('.fade4').delay(5500).fadeOut(400);
+        $('.fade4').delay(4800).fadeOut(400);
         // setTimeout(function(){ stateMain3 = true; }, 3000);
         // setTimeout(function(){ stateMain3 = false; }, 4500);
+
+        ws.send('back');
+        
     }
 
     function main3ButtnClick (){
@@ -110,6 +130,13 @@
 
         $('.main1').delay(3000).fadeOut(400);
         $('.main5').delay(3000).fadeIn(400);
+
+
+        setTimeout(function() {
+        //your code to be executed after 1 second
+            ws.send('action');
+        }, 3000)
+
 
     }
 
@@ -126,8 +153,38 @@
     $(".main2").hide();
     // $(".main1").hide();
     
-    $('.main1').delay(3000).fadeOut(400)
-    $('.main2').delay(3000).fadeIn(400)
+    $('.main1').delay(5000).fadeOut(400)
+    $('.main3').delay(5000).fadeIn(400)
+    
+
+
+
+
+    // var ts;
+    // $(document).bind('touchstart', function (e){
+    // ts = e.originalEvent.touches[0].clientY;
+    // });
+
+    // $(document).bind('touchend', function (e){
+    // var te = e.originalEvent.changedTouches[0].clientY;
+    // if(ts > te+5){
+    //     slide_down();
+    // }else if(ts < te-5){
+    //     slide_up();
+    // }
+    // });
+    // let startX = startY = endX =endY =0;
+
+
+    // ontouchmove="myFunction(event)"
+    // function myFunction(event) {
+    //     var x = event.touches[0].clientX;
+    //     var y = event.touches[0].clientY;
+    //     document.getElementById("main3-title").innerHTML = x + ", " + y;
+        
+    // }
+    
+    
     
 </script>
 

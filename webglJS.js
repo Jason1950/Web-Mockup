@@ -8,6 +8,9 @@
 
     let camera, scene, renderer, stats;
 
+    let loaderAnim = document.getElementById('js-loader');
+
+
     const clock = new THREE.Clock();
 
     let mixer;
@@ -17,6 +20,11 @@
     let animationArray =[];
     let animationTemp = null;
     var canvas;
+
+    let flyState = false;
+    let flyTimes = 0;
+
+    let startX = 0, startY = 0, endX = 0, endY =0;
 
     const resizePara = 1; //4/5;
     let raycaster = new THREE.Raycaster();
@@ -50,10 +58,22 @@
     //     object.animations[ 0 ].name ="zombie";
     //     animationArray.push( object.animations[ 0 ]);            
     // } );
+    loader.load( './3dfile/man_StandToFreehang.fbx', function ( object ) {
+        object.animations[ 0 ].name ="standtofreehang";
+        animationArray.push( object.animations[ 0 ]);            
+    } );
     // loader.load( './3dfile/man_JoyfulJump.fbx', function ( object ) {
     //     object.animations[ 0 ].name ="jump";
     //     animationArray.push( object.animations[ 0 ]);            
     // } );
+    loader.load( './3dfile/man_Pain.fbx', function ( object ) {
+        object.animations[ 0 ].name ="pain";
+        animationArray.push( object.animations[ 0 ]);            
+    } );
+
+    
+
+    
 
     window.onload = function() {
         
@@ -73,7 +93,9 @@
             //put your own code here etc.
             // alert('Shake!');
             const fSpeed = 0.25, tSpeed = 0.25;
-            action = mixer.clipAction( animationArray[0] );
+
+            // die
+            action = mixer.clipAction( animationArray.find(item=>item.name=='die') );
             action.setLoop(THREE.LoopOnce);
             action.reset();
             action.play();
@@ -126,6 +148,8 @@
         scene.add( grid );
 
         
+        const group = new THREE.Group();
+
         // loader.load( './man_ZombieIdle.fbx', function ( object ) {
         loader.load( './3dfile/man.fbx', function ( object ) {
 
@@ -143,8 +167,17 @@
                 }
             } );
             object.name = "man";
-            scene.add( object );
+            // scene.add( object );
+            group.add( object );
+
+            // loaderAnim.remove();
+            $('.fade4').delay(500).fadeOut(400);
+            console.log('fade4 fade out');
+
         } );
+
+        group.name = "groupMan";
+        scene.add( group );
        
 
         
@@ -199,6 +232,21 @@
 
         renderer.render( scene, camera );
 
+        var object3DMan = scene.getObjectByName( "groupMan" );
+        
+        if (object3DMan && flyState){
+            object3DMan.updateMatrix();
+            object3DMan.position.y += 2.5;
+            object3DMan.rotation.y += 0.08;
+            console.log('move 3d model');
+            flyTimes += 1;
+            if (flyTimes>150) {
+                flyState = !flyState;
+                flyTimes = 0;
+                main3ButtnClick();
+            }
+        }
+
         // stats.update();
 
     }
@@ -237,7 +285,7 @@
 
         if (!currentlyAnimating) {
             currentlyAnimating = true;
-            playOnClick();
+            playOnClick('pain');
         }
         }
     }
@@ -245,21 +293,25 @@
 
 
     // Get a random animation, and play it 
-    function playOnClick() {
+    function playOnClick(name) {
         // let anim = Math.floor(Math.random() * possibleAnims.length) + 0;
         // playModifierAnimation(idle, 0.25, possibleAnims[anim], 0.25);
         console.log('click 3d model');
         // currentlyAnimating = false;
-        JanimationPlay();
+        JanimationPlay(name);
         console.log(animationArray);
         
     }
 
-    function JanimationPlay(){
+    function JanimationPlay(name){
         const fSpeed = 0.25, tSpeed = 0.25;
         // mixer.stopAllAction();
         let randInt = Math.floor(Math.random() * animationArray.length);
-        action = mixer.clipAction( animationArray[randInt] );
+        console.log(animationArray);
+        action = mixer.clipAction( animationArray.find(item=>item.name==name) );
+        // action = mixer.clipAction( animationArray[randInt] );
+
+       
         // action.reset();
         action.setLoop(THREE.LoopOnce);
         action.reset();
@@ -269,7 +321,7 @@
             action.enabled = true;
             action.crossFadeTo(action, tSpeed, true);
             currentlyAnimating = false;
-            }, action._clip.duration * 900 - ((tSpeed + fSpeed) * 1000));
+            }, action._clip.duration * 2000 - ((tSpeed + fSpeed) * 1000));
     }
 
     function playModifierAnimation(from, fSpeed, to, tSpeed) {
@@ -294,3 +346,52 @@
     //     return clip;
     //    }
     //   );
+
+
+    
+
+    wetherScroll();
+    function wetherScroll(){
+        
+        var body=document.getElementsByTagName("body");
+        $(document).bind('touchstart',function(event){
+        var touch = event.targetTouches[0];
+        //滑動起點的座標
+        startX = touch.pageX;
+        startY = touch.pageY;
+        // console.log("startX:" startX "," "startY:" startY);
+        });
+        $(document).bind("touchmove",function(event){
+        var touch = event.targetTouches[0];
+        //手勢滑動時，手勢座標不斷變化，取最後一點的座標為最終的終點座標
+            endX = touch.pageX;
+            endY = touch.pageY;
+            // console.log("endX:", endX, ",", "endY:" ,endY);
+        })
+        // ac();
+        $(document).bind("touchend",function(event){
+        var distanceX=endX-startX,
+            distanceY=endY - startY;
+            // console.log("distanceX:" distanceX "," "distanceY:" distanceY);
+            //移動端裝置的螢幕寬度
+            var clientHeight = document.documentElement.clientHeight;
+            // console.log(clientHeight;*0.2);
+            //判斷是否滑動了，而不是螢幕上單擊了
+            if(startY!=Math.abs(distanceY)){
+    //在滑動的距離超過螢幕高度的20%時，做某種操作
+            if(Math.abs(distanceY)>clientHeight*0.2){
+    //向下滑實行函式someAction1，向上滑實行函式someAction2
+            distanceY <0 ? someAction1():someAction2();
+            }
+            }
+            startX = startY = endX =endY =0;
+        })
+    }
+    function someAction1(){
+        console.log('gogogo');
+        flyState = true;
+        JanimationPlay('standtofreehang');
+    }
+    function someAction2(){
+        console.log('.');
+    }

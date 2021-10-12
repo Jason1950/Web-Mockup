@@ -32,18 +32,21 @@
         #main2-btn1{
             position: absolute;
             /* border: 4px solid #Fff; */
-            top: 93%;
-            width: 70%;
+            top: 87%;
+            width: 80%;
             border-radius: 6px;
             border: none;
             padding: 8px;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 23px;
+            font-weight: 750;
             /* margin-left: -55px ; */
             /* left: 15%; */
             color: #fff;
             /* color: #f5c1bd; */
             background-color: #136bd0;
+            align-items: center;
+            justify-content: center;
+            display: flex;
         }
 
         #main2-img1{
@@ -51,23 +54,24 @@
             top: 15%;
             left: 15%;
             
-            width: 70% ;
-            height: 30%;
+            width: 10% ;
+            /* height: 30%; */
         }
 
         #main2-img2{
             position: absolute;
-            top: 55%;
+            top: 45%;
             left: 15%;
             width: 70% ;
-            height: 35%;
+            height: 40%;
         }
 
         #main2-text1{
             position: absolute;
             font-size: 18px;
             font-Weight: 600;
-            top: 10.5%;
+            top: 15.5%;
+            left: 15%;
             
         }
 
@@ -75,7 +79,19 @@
             position: absolute;
             font-size: 18px;
             font-Weight: 600;
-            top: 50%;
+            top: 25%;
+            left: 15%;
         }
 
-  
+        #main2-text3{
+            position: absolute;
+            font-size: 18px;
+            font-Weight: 600;
+            top: 35%;
+            left: 15%;
+        }
+        
+        #main2-btn-img{
+            width: 37px;
+            padding: 0px;
+        }
